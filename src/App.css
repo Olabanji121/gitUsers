@@ -113,10 +113,10 @@ img {
 /* Cards */
 .card {
   padding: 1rem;
-  border: #ccc 1px dotted;
+/*   border: #ccc 1px dotted; */
   margin: 0.7rem 0;
   border-radius: .2rem;
-  box-shadow: 0.2px 0.2px 0.2px #333333;
+  box-shadow: 0.1px 0.1px 0px #333333;
   background: #fff;
 }
 
