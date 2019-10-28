@@ -2,7 +2,7 @@ import React, { Fragment, Component } from "react";
 import Spinner from "../layout/Spinning";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import Repos from '../repos/Repos'
+import Repos from "../repos/Repos";
 
 class User extends Component {
 	componentDidMount() {
@@ -15,7 +15,7 @@ class User extends Component {
 		user: PropTypes.object.isRequired,
 		getUser: PropTypes.func.isRequired,
 		getUserRepos: PropTypes.func.isRequired,
-		repos: PropTypes.array.isRequired,
+		repos: PropTypes.array.isRequired
 	};
 
 	render() {
@@ -31,8 +31,8 @@ class User extends Component {
 			following,
 			public_repos,
 			public_gists,
-            hireable,
-            company,
+			hireable,
+			company
 		} = this.props.user;
 
 		const { loading, repos } = this.props;
@@ -68,35 +68,50 @@ class User extends Component {
 								<h3>Bio</h3>
 								<p>{bio}</p>
 							</>
-                        )}
-                        
-                        <a href={html_url}className="btn btn-dark my-1"> Visit Github Profile</a>
-                        <ul>
-                            <li>
-                                {login && <> <strong>Username:</strong> {login} </>}
-                            </li>
-                            <li>
-                                {company && <> <strong>Company:</strong> {company} </>}
-                            </li>
-                            <li>
-                                {blog && <> <strong>Website:</strong> {blog} </>}
-                            </li>
-                        
-                        </ul>
+						)}
+
+						<a href={html_url} className="btn btn-dark my-1">
+							{" "}
+							Visit Github Profile
+						</a>
+						<ul>
+							<li>
+								{login && (
+									<>
+										{" "}
+										<strong>Username:</strong> {login}{" "}
+									</>
+								)}
+							</li>
+							<li>
+								{company && (
+									<>
+										{" "}
+										<strong>Company:</strong> {company}{" "}
+									</>
+								)}
+							</li>
+							<li>
+								{blog && (
+									<>
+										{" "}
+										<strong>Website:</strong> {blog}{" "}
+									</>
+								)}
+							</li>
+						</ul>
 					</div>
 				</div>
-                <div className="card text-center">
-                    <div className="badge badge-primary">Followers: {followers}</div>
-                    <div className="badge badge-success">Following: {following}</div>
-                    <div className="badge badge-danger">Public Repos: {public_repos}</div>
-                    <div className="badge badge-dark">Public Gists: {public_gists}</div>
-                </div>
+				<div className="card text-center">
+					<div className="badge badge-primary">Followers: {followers}</div>
+					<div className="badge badge-success">Following: {following}</div>
+					<div className="badge badge-danger">Public Repos: {public_repos}</div>
+					<div className="badge badge-dark">Public Gists: {public_gists}</div>
+				</div>
 				<p className="text-center">
-                Latest  Repos
-            </p>
-				
-				<Repos repos={repos}/>
-
+					<strong>Latest Repos</strong>
+				</p>
+				<Repos repos={repos} />
 			</Fragment>
 		);
 	}
