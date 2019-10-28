@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom'
 
 // using Stateless Functional Components 
 const UserItem = ({user:{login, avatar_url, html_url}})=>{
@@ -16,7 +17,7 @@ const UserItem = ({user:{login, avatar_url, html_url}})=>{
 				/>
 				<h3>{login}</h3>
 				<div>
-					<a href={html_url}  target="_blank" rel="noopener noreferrer"className="btn btn-primary btn-sm my-1">More</a>
+					<Link to={`/user/${login}`}   rel="noopener noreferrer"className="btn btn-primary btn-sm my-1">More</Link>
 				</div>
 
 			</div>

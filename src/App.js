@@ -3,13 +3,16 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./Components/layout/NavBar";
 import Users from "./Components/users/Users";
+import User from "./Components/users/User";
 import axios from "axios";
 import Search from "./Components/users/Search";
 import Alert from "./Components/layout/Alert";
+import About from "./Components/pages/About";
 
 export default class App extends Component {
 	state = {
 		users: [],
+		user: {},
 		loading: false,
 		alert: null
 	};
@@ -46,6 +49,20 @@ export default class App extends Component {
 		});
 	};
 
+	getUser = async login => {
+		this.setState({
+			loading: true
+		});
+		const res = await axios.get(
+			`https://api.github.com/users/${login}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+		);
+		// console.log(res.data.items)
+		this.setState({
+			user: res.data,
+			loading: false
+		});
+	};
+
 	clearUsers = () => {
 		this.setState({
 			users: [],
@@ -61,7 +78,7 @@ export default class App extends Component {
 	};
 
 	render() {
-		const { users, loading } = this.state;
+		const { users, loading, user } = this.state;
 		return (
 			<Router>
 				<div className="App">
@@ -70,6 +87,7 @@ export default class App extends Component {
 						<Alert alert={this.state.alert} />
 						<Switch>
 							<Route
+								exact
 								path="/"
 								render={props => (
 									<Fragment>
@@ -81,6 +99,19 @@ export default class App extends Component {
 										/>
 										<Users loading={loading} users={users} />
 									</Fragment>
+								)}
+							/>
+							<Route exact path="/about" component={About} />
+							<Route
+								exact
+								path="/User/:login"
+								render={props => (
+									<User
+										{...props}
+										getUser={this.getUser}
+										user={user}
+										loading={loading}
+									/>
 								)}
 							/>
 						</Switch>
