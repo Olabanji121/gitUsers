@@ -1,5 +1,4 @@
 import React, { useState , useContext} from "react";
-import PropTypes from "prop-types";
 import GithubContext from "../../context/github/githubContext";
 import AlertContext from "../../context/Alert/alertContext";
 // rce
@@ -50,10 +49,6 @@ const Search = () => {
 	);
 };
 
-Search.propTypes = {
-	
-	
-	setAlert: PropTypes.func.isRequired
-};
+
 
 export default Search;
