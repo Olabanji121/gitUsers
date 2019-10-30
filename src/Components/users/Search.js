@@ -1,49 +1,59 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState , useContext} from "react";
+import PropTypes from "prop-types";
+import GithubContext from "../../context/github/githubContext";
+import AlertContext from "../../context/Alert/alertContext";
 // rce
-class Search extends Component {
-    state={
-        text:""
-    }
+const Search = () => {
 
-    static propTypes={
-        searchUsers: PropTypes.func.isRequired,
-        clearUsers: PropTypes.func.isRequired,
-        setAlert: PropTypes.func.isRequired,
-    }
+	const githubContext = useContext(GithubContext);
+	const alertContext = useContext(AlertContext);
 
-    handleChange= (e)=>{
+	const [text, setText] = useState("");
 
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+	const handleChange = e => {
+		setText(e.target.value);
+	};
 
-    handleSubmit=(e)=>{
-        e.preventDefault();
-        if(this.state.text === ''){
-            this.props.setAlert('Please enter your search word', 'light');
-        }else{
-            this.props.searchUsers(this.state.text);
-            this.setState({text: ''})
-        }
-        
-    }
+	const handleSubmit = e => {
+		e.preventDefault();
+		if (text === "") {
+			alertContext.setAlert("Please enter your search word", "light");
+		} else {
+			githubContext.searchUsers(text);
+			setText("");
+		}
+	};
 
-    render() {
-        const {clearUsers, showClear} = this.props
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit} className="form">
-                    <input type="text" name= 'text' placeholder='Search Users...' value={this.state.text} onChange=  {this.handleChange}/>
-                    <input type="submit" value='Search' className='btn btn-block btn-primary'/>
-                </form>
+	return (
+		<div>
+			<form onSubmit={handleSubmit} className="form">
+				<input
+					type="text"
+					name="text"
+					placeholder="Search Users..."
+					value={text}
+					onChange={handleChange}
+				/>
+				<input
+					type="submit"
+					value="Search"
+					className="btn btn-block btn-primary"
+				/>
+			</form>
 
-                {showClear && <button className="btn btn-block btn-danger" onClick={clearUsers}>Clear</button>}
-                
-            </div>
-        )
-    }
-}
+			{githubContext.users.length> 0 && (
+				<button className="btn btn-block btn-danger" onClick={githubContext.clearUsers}>
+					Clear
+				</button>
+			)}
+		</div>
+	);
+};
 
-export default Search
+Search.propTypes = {
+	
+	
+	setAlert: PropTypes.func.isRequired
+};
+
+export default Search;
